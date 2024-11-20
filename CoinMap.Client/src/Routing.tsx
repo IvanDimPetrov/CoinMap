@@ -6,10 +6,6 @@ import Home from "./pages/home/Home"
 const Routing = () => {
     return (
         <Routes>
-            {/* <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} /> Catch-all for unmatched routes */}
             <Route path="/" element={<Home />}/>
             <Route path='/register' element={<Register/>}/>
             <Route path='/login' element={<Login/>}/>

@@ -40,7 +40,7 @@ namespace CoinMap.Api.Controllers.Account
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUser model)
+        public async Task<IActionResult> Login([FromBody] LoginUserRequest model)
         {
             var user = await _userService.Login(model.Email, model.Password);
             if (user != null)
@@ -58,7 +58,7 @@ namespace CoinMap.Api.Controllers.Account
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)),
                     SecurityAlgorithms.HmacSha256));
 
-                return Ok(new UserResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), Email = user.Email, UserName = user.UserName });
+                return Ok(new LoginUserResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), Email = user.Email, UserName = user.UserName });
             }
 
             return Unauthorized();

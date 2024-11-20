@@ -35,11 +35,12 @@ namespace CoinMap.Infrastructure.Services.Cache
                 {
                     Id = i + 1,
                     Name = x.Key,
+                    VenuesCount = x.Count()
                 });
 
                 await _redis.StringSetAsync(Constants.REDIS_CATEGORIES_KEY, JsonConvert.SerializeObject(categories));
 
-                foreach (var group in categoryGroups)
+                foreach (var group in categoryGroups!)
                 {
                     var obj = JsonConvert.SerializeObject(group);
                     await _redis.StringSetAsync(group.Key, obj);
@@ -57,6 +58,6 @@ namespace CoinMap.Infrastructure.Services.Cache
 
     internal class ApiResponce
     {
-        public List<Venue> Venues { get; set; }
+        public List<Venue> Venues { get; set; } = new();
     }
 }

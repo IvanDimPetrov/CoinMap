@@ -12,7 +12,7 @@ namespace CoinMap.Infrastructure.Services.Cache
         {
             _redis = muxer.GetDatabase();
         }
-        public async Task<T> GetDataByKey<T>(string key)
+        public async Task<T> GetDataByKeyAsync<T>(string key)
         {
 
             var data = await _redis.StringGetAsync(key);

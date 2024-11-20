@@ -10,5 +10,6 @@ namespace CoinMap.Domain.Entities.Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int VenuesCount { get; set; }
     }
 }
