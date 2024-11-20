@@ -1,0 +1,40 @@
+/* Footer container styling */
+.footer {
+    position: fixed; /* Fixes the footer at the bottom of the screen */
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Makes the footer span the entire width */
+    z-index: 1000; /* Ensures the footer is on top of other elements if necessary */
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Footer content wrapper */
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Navigation menu styling */
+  .footer-nav {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Link styling */
+  .footer-link {
+    color: #d1eaff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #fff;
+  }
+  

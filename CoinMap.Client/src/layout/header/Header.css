@@ -1,0 +1,61 @@
+/* Header container styling */
+.header {
+    position: fixed; /* Fixes the header at the top of the screen */
+    top: 0;
+    left: 0;
+    width: 100%; /* Makes the header span the entire width */
+    z-index: 1000; /* Ensures the header is on top of other elements */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Pushes the main content below the header */
+  main {
+    padding-top: 60px; /* Adjust this to the height of your header */
+  }
+  
+  /* Logo styling */
+  .header-logo {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Navigation menu styling */
+  .header-nav {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Link styling */
+  .header-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    margin-right: 50px;
+  }
+  
+  .header-link:hover {
+    color: #d1eaff;
+  }
+  
+  /* Login link specific styling */
+  .header-link-login {
+    font-weight: bold;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .header-link-login:hover {
+    background-color: #fff;
+    color: #007bff;
+  }
+  
