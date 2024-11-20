@@ -1,0 +1,34 @@
+.categories-container {
+    position: absolute; /* Position the container absolutely */
+    left: 20px; /* Move the container to the left side of the screen */
+    top: 60px; /* Add some space from the top */
+    max-width: 300px; /* Limit the width of the container */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .categories-list {
+    margin-top: 20px;
+  }
+  
+  .categories-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .categories-list li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  .categories-list p {
+    color: #555;
+    font-size: 16px;
+  }
+  
