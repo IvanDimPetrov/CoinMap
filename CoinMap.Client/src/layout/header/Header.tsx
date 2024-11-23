@@ -23,6 +23,7 @@ const Header: React.FC = () => {
         {isSignedIn && <span>Welcome {user.userName}</span>}
         {!isSignedIn && <Link to="/register" className="header-link header-link-login">Register</Link>}
         {!isSignedIn && <Link to="/login" className="header-link header-link-login">Login</Link>}
+        {isSignedIn && <Link to="/favorite-venues" className="header-link header-link-login">Favorite Venues</Link>}
         {isSignedIn && <button className="header-link-login" onClick={logoutUser}>Logout</button>}
       </nav>
     </header>

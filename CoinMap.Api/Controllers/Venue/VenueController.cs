@@ -1,4 +1,5 @@
-﻿using CoinMap.Domain.Interfaces.Repositories;
+﻿using CoinMap.Domain.Entities.Account;
+using CoinMap.Domain.Interfaces.Repositories;
 using CoinMap.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,12 +41,41 @@ namespace CoinMap.Api.Controllers.Venue
         [HttpPost("favorites")]
         public async Task<ActionResult> AddFavoriteVenue([FromBody]CoinMap.Domain.Entities.Venue venue)
         {
-            var userEmail = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await _userRepository.GetUserByEmailAsync(userEmail);
+            var user = await GetUser();
+            if (user != null)
+            {
+                await _venueService.AddFavoriteVenue(venue, user!);
 
-            await _venueService.AddFavoriteVenue(venue, user);
+                return Ok("Favorite Venue successfully added");
+            }
+            
+            return Unauthorized();
+        }
 
-            return Ok("Favorite Venue successfully added");
+        [HttpGet("favorites")]
+        public async Task<ActionResult> GetFavoritesVenues()
+        {
+            var user = await GetUser();
+            if (user != null)
+            {
+                var result = await _venueService.GetFavoriteVenues(user!.Id);
+
+                return Ok(result);
+            }
+
+            return Unauthorized();
+        }
+
+        private async Task<User?> GetUser()
+        {
+            if (HttpContext.User.Identity!.IsAuthenticated)
+            {
+                var userEmail = HttpContext.User!.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var user = await _userRepository.GetUserByEmailAsync(userEmail!);
+                return user;
+            }
+
+            return null;
         }
     }
 }

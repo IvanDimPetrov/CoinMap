@@ -39,5 +39,10 @@ namespace CoinMap.Infrastructure.Services
         {
             await _venueRepository.AddFavoriteVenue(venue, user.Id);
         }
+
+        public Task<IEnumerable<Venue>> GetFavoriteVenues(int userId)
+        {
+            return _venueRepository.GetFavoriteVenues(userId);
+        }
     }
 }

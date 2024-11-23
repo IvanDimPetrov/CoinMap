@@ -10,5 +10,7 @@ namespace CoinMap.Domain.Interfaces.Repositories
     public interface IVenueRepository
     {
         Task AddFavoriteVenue(Venue venue, int userId);
+
+        Task<IEnumerable<Venue>> GetFavoriteVenues(int userId);
     }
 }

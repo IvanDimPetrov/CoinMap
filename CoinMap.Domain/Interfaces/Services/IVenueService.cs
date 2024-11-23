@@ -10,5 +10,7 @@ namespace CoinMap.Domain.Interfaces.Services
         Task<List<Venue>> GetVenuesByCategory(string categoryName);
 
         Task AddFavoriteVenue(Venue venue, User user);
+
+        Task<IEnumerable<Venue>> GetFavoriteVenues(int userId);
     }
 }

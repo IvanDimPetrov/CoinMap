@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Venue } from "../../types/Venue";
-import { PostReguest } from "../../api/cruds";
+import { PostReguest, GetRequest } from "../../api/cruds";
 
 interface FavoriteVenues {
     venues: Venue[]
@@ -17,14 +17,24 @@ export const FavoriteVenues = createSlice({
     extraReducers(builder)  {
         builder.addCase(addFavoriteVenueAsync.fulfilled, (state, action) => {
             state.venues.push(action.payload)
+        }),
+        builder.addCase(getFavoriteVenuesAsync.fulfilled, (state, action) => {
+            state.venues = action.payload;
         })
     }
 })
 
 export const addFavoriteVenueAsync = createAsyncThunk("favoriteVenues/addFavoriteVenueAsync",
     async (venue: Venue) => {
-        const res = await PostReguest<string>('venues/favorites', venue);
+        await PostReguest<string>('venues/favorites', venue);
         return venue;
+    }
+)
+
+export const getFavoriteVenuesAsync = createAsyncThunk("favoriteVenues/getFavoriteVenuesAsync",
+    async () => {
+        const res = await GetRequest<Venue[]>('venues/favorites');
+        return res;
     }
 )
 

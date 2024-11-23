@@ -1,32 +1,47 @@
 ﻿using CoinMap.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace CoinMap.Infrastructure.Services.Cache
 {
-    internal class GetDataHostedService : IHostedService
+    internal class GetApiDataHostedService : IHostedService
     {
         private readonly HttpClient _httpClient;
         private readonly IDatabase _redis;
+        private readonly IConfiguration _configuration;
 
-        public GetDataHostedService(
+        public GetApiDataHostedService(
             HttpClient httpClient,
-            IConnectionMultiplexer muxer)
+            IConnectionMultiplexer muxer,
+            IConfiguration configuration)
         {
             _httpClient = httpClient;
             _redis = muxer.GetDatabase();
+            _configuration = configuration;
+
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var apiUrl = "https://coinmap.org/api/v1/venues/";
+            await PrepareCacheWithVenues();
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        private async Task PrepareCacheWithVenues()
+        {
+            var apiUrl = _configuration["ApiUrl:venuesUrl"];
 
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
             if (response.IsSuccessStatusCode)
             {
                 string responseData = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<ApiResponce>(responseData);
+                var data = JsonConvert.DeserializeObject<ApiVenuesResponce>(responseData);
 
                 var categoryGroups = data?.Venues.GroupBy(x => x.Category);
 
@@ -44,18 +59,11 @@ namespace CoinMap.Infrastructure.Services.Cache
                     var obj = JsonConvert.SerializeObject(group);
                     await _redis.StringSetAsync(group.Key, obj);
                 }
-
-                Console.WriteLine(data);
             }
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
         }
     }
 
-    internal class ApiResponce
+    internal class ApiVenuesResponce
     {
         public List<Venue> Venues { get; set; } = new();
     }

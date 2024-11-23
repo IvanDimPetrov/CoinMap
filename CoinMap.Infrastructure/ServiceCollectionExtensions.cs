@@ -62,7 +62,7 @@ namespace CoinMap.Infrastructure
         public static void AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost"));
-            services.AddHostedService<GetDataHostedService>();
+            services.AddHostedService<GetApiDataHostedService>();
             services.AddHttpClient();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IVenueService, VenueService>();

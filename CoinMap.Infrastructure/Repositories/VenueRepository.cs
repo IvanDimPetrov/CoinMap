@@ -1,6 +1,7 @@
 ﻿using CoinMap.Domain.Entities;
 using CoinMap.Domain.Interfaces.Repositories;
 using CoinMap.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoinMap.Infrastructure.Repositories
 {
@@ -22,6 +23,15 @@ namespace CoinMap.Infrastructure.Repositories
             });
 
             await _context.SaveChangesAsync();  
+        }
+
+        public async Task<IEnumerable<Venue>> GetFavoriteVenues(int userId)
+        {
+            return await _context.FavoriteVenues
+                            .Include(x => x.Venue)
+                            .Where(x => x.UserId == userId)
+                            .Select(x => x.Venue)
+                            .ToListAsync();
         }
     }
 }
