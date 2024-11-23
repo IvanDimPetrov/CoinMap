@@ -1,4 +1,6 @@
-﻿using CoinMap.Domain.Entities.Account;
+﻿using CoinMap.Domain.Entities;
+using CoinMap.Domain.Entities.Account;
+using CoinMap.Infrastructure.Context.FluentApi;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoinMap.Infrastructure.Context
@@ -11,11 +13,14 @@ namespace CoinMap.Infrastructure.Context
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<FavoriteVenues> FavoriteVenues { get; set;}
+
+        public DbSet<Venue> Venues { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            builder.ApplyConfiguration(new UserFluentApi());
+            builder.ApplyConfiguration(new VenueFluentApi());
         }
     }
 }

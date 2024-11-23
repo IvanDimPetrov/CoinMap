@@ -1,17 +1,14 @@
-﻿using CoinMap.Domain.Entities.Category;
-using CoinMap.Domain.Entities.Venue;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoinMap.Domain.Entities;
+using CoinMap.Domain.Entities.Account;
 
 namespace CoinMap.Domain.Interfaces.Services
 {
     public interface IVenueService
     {
-        Task<List<Category>> GetCategories();
+        Task<List<VenueCategory>> GetCategories();
 
         Task<List<Venue>> GetVenuesByCategory(string categoryName);
+
+        Task AddFavoriteVenue(Venue venue, User user);
     }
 }

@@ -1,5 +1,4 @@
-﻿using CoinMap.Domain.Entities.Category;
-using CoinMap.Domain.Entities.Venue;
+﻿using CoinMap.Domain.Entities;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -31,7 +30,7 @@ namespace CoinMap.Infrastructure.Services.Cache
 
                 var categoryGroups = data?.Venues.GroupBy(x => x.Category);
 
-                var categories = categoryGroups?.ToList().Select((x, i) => new Category
+                var categories = categoryGroups?.ToList().Select((x, i) => new VenueCategory
                 {
                     Id = i + 1,
                     Name = x.Key,

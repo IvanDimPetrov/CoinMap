@@ -4,6 +4,7 @@ using CoinMap.Infrastructure.Context;
 using CoinMap.Infrastructure.Repositories;
 using CoinMap.Infrastructure.Services;
 using CoinMap.Infrastructure.Services.Cache;
+using CoinMap.Infrastructure.Services.Cache.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +37,7 @@ namespace CoinMap.Infrastructure
             //.AddDefaultTokenProviders();
         }
 
-        public static void AddAuthenticationWithJWTTokenPloicy(this IServiceCollection services, string issuer, string key)
+        public static void AddAuthenticationWithJWTTokenPolicy(this IServiceCollection services, string issuer, string key)
         {
             services.AddAuthentication(options =>
             {
@@ -63,10 +64,11 @@ namespace CoinMap.Infrastructure
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost"));
             services.AddHostedService<GetDataHostedService>();
             services.AddHttpClient();
-            services.AddScoped<CacheService, CacheService>();
+            services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IVenueService, VenueService>();
+            services.AddScoped<IVenueRepository, VenueRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>(); 
         }
     }
 }

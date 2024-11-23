@@ -7,6 +7,7 @@ import { getVenuesByCategoryAsync } from '../../../state/VenueCategories/VenueCa
 import { resetActiveCategory } from '../../../state/VenueCategories/VenueCategoriesSlice'
 import { VenueCategory } from '../../../types/VenueCategory';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { addFavoriteVenueAsync } from '../../../state/FavoriteVenues/FavoriteVenuesSlice';
 
 
 const itemsPerPage = 10;
@@ -17,7 +18,7 @@ const VenuesByCategory = () => {
     const activeCategory: VenueCategory | null = useSelector((state: RootState) => state.venueCategories.activeCategory);
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [currentItems, setCurrentItems] = useState<Venue[]>();
+    const [currentItems, setCurrentItems] = useState<Venue[]>([]);
 
     const totalPages = activeCategory ? Math.ceil(activeCategory.venuesCount / itemsPerPage) : 0;
 
@@ -55,34 +56,48 @@ const VenuesByCategory = () => {
         }
     };
 
+    const addFavoriteVenue = (venue: Venue) => {
+        dispatch(addFavoriteVenueAsync(venue))
+    }
+
+    const pagination: JSX.Element | null = currentItems?.length > 0 ? (
+            <div className="pagination">
+                    <button
+                    disabled={currentPage === 1}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    >
+                    Previous
+                    </button>
+                    <span>
+                    Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                    Next
+                    </button>
+                </div>
+    ) : null;
+
     return (
         <div className="paginated-container">
+
+            {pagination}
 
             <div className="items-grid">
                 {currentItems?.map((item) => (
                 <div key={item.id} className="item-card">
-                    <p>Latitude: {item.lat} Longutude: {item.lon}</p>
+                    <p>
+                        <strong>Geolocation Degrees:</strong> {item.geolocation_Degrees}  
+                        <span style={{padding: "2px", cursor: "pointer", backgroundColor: "lightgray"}} onClick={() => navigator.clipboard.writeText(item.geolocation_Degrees)}>📄</span>
+                        <button onClick={() => addFavoriteVenue(item)}>Add to favorites</button>
+                    </p>
                 </div>
                 ))}
             </div>
 
-            <div className="pagination">
-                <button
-                disabled={currentPage === 1}
-                onClick={() => handlePageChange(currentPage - 1)}
-                >
-                Previous
-                </button>
-                <span>
-                Page {currentPage} of {totalPages}
-                </span>
-                <button
-                disabled={currentPage === totalPages}
-                onClick={() => handlePageChange(currentPage + 1)}
-                >
-                Next
-                </button>
-            </div>
+            {pagination}
 
         </div>
     )

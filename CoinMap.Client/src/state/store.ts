@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 import UserReducer from './User/UserSlice'
 import VenueReducer from "./VenueCategories/VenueCategoriesSlice";
+import FavoriteVenuesReducer from "./FavoriteVenues/FavoriteVenuesSlice";
 
 
 export const store = configureStore({
     reducer: {
         user: UserReducer,
-        venueCategories: VenueReducer
+        venueCategories: VenueReducer,
+        favoriteVenues: FavoriteVenuesReducer
     }
 });
 

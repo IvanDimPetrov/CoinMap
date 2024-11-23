@@ -11,8 +11,8 @@ builder.Services.AddSwaggerGen();
 
 //Infrastructure project
 builder.Services.AddCoinMapDbContext(builder.Configuration.GetConnectionString("DefaultConnection")!);
-builder.Services.AddIdentityPolicy();
-builder.Services.AddAuthenticationWithJWTTokenPloicy(builder.Configuration["Jwt:Issuer"]!, builder.Configuration["Jwt:Key"]!);
+//builder.Services.AddIdentityPolicy();
+builder.Services.AddAuthenticationWithJWTTokenPolicy(builder.Configuration["Jwt:Issuer"]!, builder.Configuration["Jwt:Key"]!);
 builder.Services.AddServices();
 //Infrastructure project
 

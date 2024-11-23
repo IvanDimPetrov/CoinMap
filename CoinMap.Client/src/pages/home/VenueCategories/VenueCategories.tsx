@@ -11,6 +11,7 @@ const VenueCategories = () => {
     
     const dispatch = useDispatch<ApiDispath>();
     const venueCategories = useSelector((state: RootState) => state.venueCategories.categories);
+    const activeCategory = useSelector((state: RootState) => state.venueCategories.activeCategory)
 
     useEffect(() => {
         if (venueCategories.length == 0) {
@@ -32,7 +33,7 @@ const VenueCategories = () => {
                 {venueCategories.length > 0 ? (
                 <ul>
                     {venueCategories.map((item) => (
-                    <li key={item.id}>Category: '<strong>{item.name}</strong>' has {item.venuesCount} venues</li>
+                    <li style={activeCategory?.name == item.name ? {backgroundColor: "lightBlue"} : {}} key={item.id}>Category: '<strong>{item.name}</strong>' has {item.venuesCount} venues</li>
                     ))}
                 </ul>
                 ) : (

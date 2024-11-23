@@ -1,10 +1,10 @@
-﻿using CoinMap.Domain.Entities.Venue;
+﻿using CoinMap.Infrastructure.Services.Cache.Interfaces;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace CoinMap.Infrastructure.Services.Cache
 {
-    public class CacheService
+    public class CacheService : ICacheService
     {
         private readonly IDatabase _redis;
 
@@ -12,14 +12,29 @@ namespace CoinMap.Infrastructure.Services.Cache
         {
             _redis = muxer.GetDatabase();
         }
-        public async Task<T> GetDataByKeyAsync<T>(string key)
-        {
 
+        public Task<bool> ExistsAsync(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<T?> GetAsync<T>(string key)
+        {
             var data = await _redis.StringGetAsync(key);
 
             var result = JsonConvert.DeserializeObject<T>(data!);
 
             return result!;
+        }
+
+        public Task RemoveAsync(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetAsync<T>(string key, T value)
+        {
+            throw new NotImplementedException();
         }
     }
 }
