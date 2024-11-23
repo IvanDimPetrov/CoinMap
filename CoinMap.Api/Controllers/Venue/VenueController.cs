@@ -7,11 +7,11 @@ namespace CoinMap.Api.Controllers.Venue
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class VenueController : ControllerBase
+    public class VenuesController : ControllerBase
     {
         private readonly IVenueService _venueService;
 
-        public VenueController(IVenueService venueService)
+        public VenuesController(IVenueService venueService)
         {
             _venueService = venueService;
         }
@@ -23,10 +23,11 @@ namespace CoinMap.Api.Controllers.Venue
             return Ok(categories);
         }
 
-        [HttpGet("venues/{category}/{page}")]
-        public async Task<ActionResult> GetVenuesByCategory(string category, int page)
+        [HttpGet("")]
+        public async Task<ActionResult> GetVenuesByCategory(string category, int page, int pageSize)
         {
-            var venues = (await _venueService.GetVenuesByCategory(category)).Take(page * 20);
+            var skipedItems = page == 1 ? 0 : (page - 1) * pageSize;
+            var venues = (await _venueService.GetVenuesByCategory(category)).Skip(skipedItems).Take(pageSize);
             return Ok(venues);
         }
     }

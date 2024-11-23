@@ -4,6 +4,8 @@ import VenueCategoriesDropDown from "./VenueCategoriesDropDown"
 import { ApiDispath, RootState } from "../../../state/store";
 import { getVenueCategoriesAsync } from '../../../state/VenueCategories/VenueCategoriesSlice';
 import { useEffect } from "react";
+import { setActiveCatregory, resetActiveCategory } from '../../../state/VenueCategories/VenueCategoriesSlice';
+import { VenueCategory } from '../../../types/VenueCategory';
 
 const VenueCategories = () => {
     
@@ -16,9 +18,16 @@ const VenueCategories = () => {
         }
     }, [])
 
+    const onSelectCategory = (selectedCategory: VenueCategory | undefined) => {
+        if(!selectedCategory) {
+            dispatch(resetActiveCategory());
+        }
+        dispatch(setActiveCatregory(selectedCategory));
+    }
+
     return (
         <div className="categories-container">
-            <VenueCategoriesDropDown categories={venueCategories} onCategorySelect={() => {}}/>
+            <VenueCategoriesDropDown categories={venueCategories} onCategorySelect={onSelectCategory}/>
             <div className="categories-list">
                 {venueCategories.length > 0 ? (
                 <ul>

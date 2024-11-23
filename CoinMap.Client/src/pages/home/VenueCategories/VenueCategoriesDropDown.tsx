@@ -9,16 +9,16 @@ import { VenueCategory } from '../../../types/VenueCategory';
 
 interface CategoriesDropdownProps {
   categories: VenueCategory[];
-  onCategorySelect: (selectedCategory: VenueCategory) => void;
+  onCategorySelect: (selectedCategory: VenueCategory | undefined) => void;
 }
 
 const VenueCategoriesDropDown: React.FC<CategoriesDropdownProps> = ({ categories, onCategorySelect }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = Number(e.target.value);
     const selectedCategory = categories.find((cat) => cat.id === selectedId);
-    if (selectedCategory) {
+    //if (selectedCategory) {
       onCategorySelect(selectedCategory);
-    }
+    //}
   };
 
   return (

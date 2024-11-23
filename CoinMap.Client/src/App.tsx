@@ -7,15 +7,6 @@ import Routing from './Routing'
 
 
 function App() {
-  // useEffect(() => {
-  //   async function  populateData() {
-  //      const data = await GetRequest('weatherforecast');
-  //      setData(data);
-  //   }
-
-  //   populateData();
-  // }, [])
-
   return (
     <>
       <Header/>

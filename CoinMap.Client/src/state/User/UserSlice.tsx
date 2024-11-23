@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PostReguest } from "../../api/cruds"
-import { LoginUser, LoginUserResponse, RegisterUser } from "../../types/User"
+import { LoginUser, LoginUserResponse, RegisterUser, RegisterUserResponse } from "../../types/User"
 
 interface UserState {
     isSignedIn: boolean,
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
 export const registerUserAsync = createAsyncThunk("user/registerUserAsync", 
     async (userData: RegisterUser) => {
         try {
-            const res = await PostReguest<string>('/account/register', userData);
+            const res = await PostReguest<RegisterUserResponse>('/account/register', userData);
             return res;
         }
         catch {

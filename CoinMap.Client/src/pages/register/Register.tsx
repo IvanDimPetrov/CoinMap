@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './Register.css';
-import { RegisterUser as RegisterUserForm }  from '../../types/User';
+import { RegisterUser as RegisterUserForm, RegisterUserResponse }  from '../../types/User';
 import { useDispatch } from 'react-redux';
 import { ApiDispath } from '../../state/store';
 import { registerUserAsync } from '../../state/User/UserSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
+
+
 
 const RegisterUser: React.FC = () => {
 
@@ -28,8 +30,8 @@ const RegisterUser: React.FC = () => {
         console.log('User Registered:', formData);
         dispatch(registerUserAsync(formData))
         .then(unwrapResult)
-        .then((result: any) => {
-            alert(result.data.message);
+        .then((result: RegisterUserResponse) => {
+            alert(result.message);
             navigate('/login');
         })
         .catch(e => {
