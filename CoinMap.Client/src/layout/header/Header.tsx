@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApiDispath, RootState } from "../../state/store";
@@ -10,10 +10,12 @@ const Header: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn);
   const dispatch = useDispatch<ApiDispath>();
+  const navigate = useNavigate();
 
   const logoutUser = () => {
     dispatch(logout());
     sessionStorage.removeItem("token");
+    navigate('/');
   }
 
   return (
